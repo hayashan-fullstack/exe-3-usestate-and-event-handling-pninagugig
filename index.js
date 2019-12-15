@@ -1,60 +1,88 @@
-import React, { useState } from 'react'
+import React from "react";
 import ReactDOM from "react-dom";
 
-const PrintRows =(props) => {
-  return(
-  <div>
-    <h3>{props.name}  <br></br>{props.number}</h3>
-    </div>)
+
+
+const Header=()=>{
+    return(
+        <div>
+            <table border = '1'>
+            <tr>
+                <th width ="24%">Detailes</th>
+                <th width ="24%">Deadline</th>
+                <th width ="24%">Important</th>
+                <th width ="24%">Done</th>
+            </tr>
+            </table>
+        </div>
+    )
 }
-const Print = (props) =>{
-return (
-  props.persons.map(person => <PrintRows key={person.number} name={person.name}  number={person.number}/>))
+const Line=(props)=>{
+    return(
+        <div>
+            <table border = '1'>
+            <tr>
+                <td width ="25%">{props.line.Detailes}</td>
+                <td width ="26%">{props.line.Deadline}</td>
+                <td width ="26%">{props.line.Important}</td>
+                <td width ="27%">{props.line.Done}</td>
+            </tr>
+            </table>
+        </div>
+
+    )
+}
+const Doing = (props) =>{
+    return (
+        props.MyTaskbar.map(line =><Line line={line}/>)
+    )
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Brikman Ahuvi', number: '058-325-0338' },
-    { name: 'Gugig Pnina', number: '055-678-0851'},
-    { name: 'Levi Leah', number: '058-329-5987'},
-    { name: 'Zeivald Shoshi', number: '055-678-5281' },
-  ])
-  const [ newName, setNewName ] = useState('New contact...')
-  const [ newNumber, setNewNumber ] = useState('New phone...')
-
-  const addPerson =(event) =>{
-    event.preventDefault()
-    console.log('button clicked')
-    console.log(persons)
-    const personObject={
-      name: newName, 
-      number: newNumber,
-    }
-    setPersons(persons.concat(personObject))
-  }
-  const handlePerson=(event)=>{
-    setNewName(event.target.value)
-  }
-  const handleNumber=(event)=>{
-    setNewNumber(event.target.value)
-  }
-  return (
-    <div>
-      <h1>Phonebook</h1>
-      <form>
-        <div>
-          <form onSubmit={addPerson}>
-            
-            name: <input value={newName} onChange={handlePerson}/>
-            number: <input value={newNumber} onChange={handleNumber}/>
-            <div><button type="submit">add</button></div>
-          </form>
+    const MyTaskbar = [
+        {
+            Detailes: "dentist",
+            Deadline: "20-12-2019",
+            Important: "Y",
+            Done: "----✔----"
+        },
+        {
+            Detailes: "meeting",
+            Deadline: "14-05-2021",
+            Important: "Y",
+            Done: "----✖----"
+        },
+        {
+            Detailes: "homework",
+            Deadline: "12-12-2012",
+            Important: "N",
+            Done: "----✖----"
+        },
+        {
+            Detailes: "trip",
+            Deadline: "01-01-2000",
+            Important: "N",
+            Done: "----✔----"
+        },
+        {
+            Detailes: "Shopping",
+            Deadline: "28-11-2020",
+            Important: "Y",
+            Done: "----✔----"
+        }
+    ];
+    return (
+        <div style={{margin:'15%' }}>
+        <br/>
+        <br/>
+            <h1>My Task board:</h1>
+            <br/>
+            <Header/>
+            <Doing MyTaskbar={MyTaskbar}/>
         </div>
-      </form>
-      {/* <h2>Persons</h2> */}
-      { <Print persons={persons}/> }
-    </div>
-  )
-}
-ReactDOM.render(<App />, document.getElementById("root") );
+    );
+};
+ReactDOM.render(<App />, document.getElementById("root"));
+
+
 
